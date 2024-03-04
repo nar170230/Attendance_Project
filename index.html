@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="attendance-form">
+    <h2>Attendance</h2>
+    <div id="error-message"></div>
+    <div id="result"></div>
+    <form id="attendance">
+        <div class="input-container">
+            <label for="utdId">UTD ID (Not your Net ID):</label><br>
+            <input type="text" id="utdId" name="utdId">
+        </div>
+        <div class="input-container">
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password">
+        </div>
+        <button type="submit">Submit</button>
+        <div id="quiz-section"></div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
