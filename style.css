@@ -1,0 +1,13 @@
+.input-container {
+    display: block;
+}
+
+#result {
+    color: red;
+    font-size: 1em;
+}
+
+#error-message {
+    color: red;
+    font-size: 1em;
+}
