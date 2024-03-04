@@ -1,72 +1,64 @@
+/*
+    Attendance Webpage Program
+
+    Facilitates student login for attendance tracking and quiz participation. Upon successful login,
+    students' attendance is registered, and any available quizzes are displayed. This script manages the login
+    process by validating UTD ID and password against server records.
+
+    Written Bryce Ober for CS 4485, started on February 18th, 2024.
+    NetID: beo210000
+*/
+
+// Handles form submission for attendance tracking. Validates input before making a server request.
 $(document).ready(function() {
     $('#attendance').submit(function(e) {
-        e.preventDefault();
+        e.preventDefault(); // Prevent default submission behavior
 
-        // Clear error messages
-        $('#result').html('');
-        $('#error-message').html('');
+        // Clears previous messages, to clean up the form
+        $('#result, #error-message').html('');
 
+        // Retrieves user input, from the form
         var utdId = $('#utdId').val();
         var password = $('#password').val();
 
-        // Check if utdId is empty
+        // Input validation for UTD ID and password
+        // if utdId is empty, prompt user to enter UTD ID
         if (!utdId) {
-            $('#error-message').html('<p>UTD ID cannot be empty</p>');
+            $('#error-message').html('<p>UTD ID cannot be empty.</p>');
             return;
         }
-
+        // if utdId is not 10 digits long, prompt user to enter 10 digit UTD ID
         if (utdId.length !== 10) {
-            $('#error-message').html('<p>UTD ID must be 10 digits long</p>');
+            $('#error-message').html('<p>UTD ID must be 10 digits long.</p>');
             return;
         }
-
+        // if password is empty, prompt user to enter password
         if (!password) {
-            $('#error-message').html('<p>Password cannot be empty</p>');
+            $('#error-message').html('<p>Password cannot be empty.</p>');
             return;
         }
 
-
+        // AJAX request to server for login validation
         $.ajax({
             type: 'POST',
-            url: 'login.php',
-            data: {
-                utdId: $('#utdId').val(),
-                password: $('#password').val()
-            },
+            url: 'login.php', // URL of the PHP file that interacts with the database
+            data: { utdId, password },
             success: function(response) {
-                $('#result').html(response);
+                var data = JSON.parse(response);
+                if (data.status === 'success') {
+                    // Success: Hides form and displays attendance confirmation, for the date
+                    $('#attendance, #error-message').hide();
+                    $('#success-message').html(`${data.FirstName}, your attendance has been noted for 
+                    ${new Date().toLocaleDateString()}.`);
+                } else {
+                    // Failure: Shows login failure message
+                    $('#result').html('Login failed.');
+                }
             },
             error: function() {
+                // Handles request error
                 $('#result').html('An error occurred during your request.');
             }
         });
     });
 });
-
-/*
-// Load quiz from database
-$.ajax({
-    url: 'get_quiz.php', // URL of the PHP file that interacts with the database
-    type: 'GET',
-    dataType: 'json',
-    success: function(data) {
-        // data is the JSON object returned from the server
-        // Display the quiz questions
-        for (var i = 0; i < data.length; i++) {
-            var question = data[i];
-            // Display the question and its choices
-            // This assumes that each question object has a 'text' property for the question text
-            // and a 'choices' property that is an array of choice texts
-            $('#quiz').append('<p>' + question.text + '</p>');
-            for (var j = 0; j < question.choices.length; j++) {
-                var choice = question.choices[j];
-                $('#quiz').append('<input type="radio" name="question' + i + '" value="' + choice + '">' + choice + '<br>');
-            }
-        }
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-        // Handle any errors
-        console.log('Error: ' + textStatus + ' ' + errorThrown);
-    }
-});
-*/

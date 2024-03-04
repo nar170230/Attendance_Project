@@ -1,3 +1,12 @@
+<!--
+Contains the HTML for the attendance form.
+Contains the form for the user to input their UTD ID and password.
+Displays the error message, result, and success message.
+
+Written by Bryce Ober for CS 4485, starting February 18th, 2024
+NetID: beo210000
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +19,7 @@
     <h2>Attendance</h2>
     <div id="error-message"></div>
     <div id="result"></div>
+    <div id="success-message"></div>
     <form id="attendance">
         <div class="input-container">
             <label for="utdId">UTD ID (Not your Net ID):</label><br>
@@ -25,6 +35,5 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
