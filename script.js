@@ -41,7 +41,7 @@ $(document).ready(function() {
         // AJAX request to server for login validation
         $.ajax({
             type: 'POST',
-            url: 'login.php', // URL of the PHP file that interacts with the database
+            url: 'login.php', // PHP file for testing
             data: { utdId, password },
             success: function(response) {
                 var data = JSON.parse(response);
