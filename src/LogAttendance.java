@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-public class Main {
+public class LogAttendance {
     public static void main(String[] args) {
         //Students UTD ID, and quiz answers will be obtained from html page in part 1
         String utdId = "0123456789";
@@ -27,15 +27,17 @@ public class Main {
         }
 
         //Connect to database and obtain matching entry
+        String studentName = "";
         Connection studentDatabase = null;
         try {
-            //TODO once test database is given, make the connection here
-            studentDatabase = DriverManager.getConnection("");
+            //For this to work, the database needs to exist on the local machine. Needs to be replaced later if a database address is given
+            studentDatabase = DriverManager.getConnection("jdbc:mysql://localhost:3306/attendancedb","student","password");
             ResultSet matchingStudent = studentDatabase.createStatement().executeQuery("SELECT * FROM STUDENTS WHERE id LIKE '%"+utdId+"%'");
-            //TODO send the resultSets data along with quiz answers, IP address, and System time to part 4 as well as display to screen using AJAX
+            if (matchingStudent.next())
+                studentName = matchingStudent.getString("name");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        System.out.println(studentName+" "+utdId);
     }
 }
