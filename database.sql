@@ -19,11 +19,13 @@ CREATE TABLE IF NOT EXISTS Professors (
 
 CREATE TABLE IF NOT EXISTS Students (
     StudentID INT PRIMARY KEY,
+    NetID VARCHAR(255) NOT NULL,
+    EmplID INT NOT NULL,
     FirstName VARCHAR(255) NOT NULL,
     MiddleName VARCHAR(255),
     LastName VARCHAR(255) NOT NULL,
     Email VARCHAR(255),
-    Major VARCHAR(255),
+    Career VARCHAR(255),
     Credits INT
 );
 
@@ -31,16 +33,41 @@ CREATE TABLE IF NOT EXISTS Course_Information (
 	ClassID INT PRIMARY KEY,
 	ProfessorID INT NOT NULL,
     ClassName VARCHAR(255) NOT NULL,
+    GradingBasis VARCHAR(255),
+    Units INT,
+    Credits INT NOT NULL,
     StartDate DATE NOT NULL,
     EndDate DATE NOT NULL,
-    QuizAvailability BOOLEAN NOT NULL,
     CONSTRAINT fk_professor
         FOREIGN KEY (ProfessorID)
         REFERENCES Professors(ProfessorID)
 );
 
+CREATE TABLE IF NOT EXISTS StudentGrades (
+    EnrollmentID INT PRIMARY KEY,
+    StudentID INT NOT NULL,
+    CourseID INT NOT NULL,
+    FinalGrade VARCHAR(255),
+    CONSTRAINT fk_student
+        FOREIGN KEY (StudentID)
+        REFERENCES Students(StudentID),
+    CONSTRAINT fk_course
+        FOREIGN KEY (CourseID)
+        REFERENCES Courses(CourseID)
+);
+
+CREATE TABLE IF NOT EXISTS Enrollments (
+    EnrollmentID INT PRIMARY KEY,
+    StudentID INT,
+    CourseID INT,
+    FOREIGN KEY (StudentID) REFERENCES Students(StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+
+
 CREATE TABLE IF NOT EXISTS Quiz_Questions (
 	QuestionID INT PRIMARY KEY,
+    QuizAvailability BOOLEAN NOT NULL,
     QuestionText TEXT,
     Choices JSON,
     CorrectAnswer VARCHAR(255)
