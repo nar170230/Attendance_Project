@@ -2,14 +2,28 @@
 //CS4485 - Senior Design
 //Team 58 - Nabeel Rizvi
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-public class LogAttendance {
-    public static void main(String[] args) {
+import javax.servlet.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/*public class LogAttendance {
+    public static void main(String[] args){
+
+    }
+}*/
+
+class attendanceServer extends HttpServlet {
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException{
         //Students UTD ID, and quiz answers will be obtained from html page in part 1
-        String utdId = "0123456789";
+        String utdId = request.getParameter("id");
         String[] quizAnswers = new String[3];
         long timeOfSubmission = System.currentTimeMillis();
         //TODO get users IP address
@@ -38,6 +52,11 @@ public class LogAttendance {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(studentName+" "+utdId);
+        response.setContentType("text/html");
+        try {
+            response.getWriter().write(studentName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
