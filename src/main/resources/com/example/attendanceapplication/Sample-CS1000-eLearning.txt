@@ -1,0 +1,4 @@
+"Last Name"	"First Name"	"Username"	"Student ID"	"Last Access"	"Weighted Total
+"Smith"	"Ashika Prakash"	"axa190001"	"2021500001"	"2020-12-08 10:39:59"	""	"849.00"
+"Jones"	"Dhanushu"	"dxa190001"	"2021400002"	"2020-12-18 15:58:07"	""	"748.00"
+"Smythe Jones"	"Shannon"	"sib170001"	"2021300003"	"2020-12-08 10:09:25"	""	"824.00"
